@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calcular Tiempo de Carga</title>
+</head>
+<body>
+    <h1>Calcular Tiempo de Carga</h1>
+    <form method="POST" action="/calcular-carga">
+        <label for="autonomia_km">Autonomía del vehículo (km):</label>
+        <input type="number" id="autonomia_km" name="autonomia_km" step="0.01" required>
+        <br>
+        <label for="capacidad_bateria_kwh">Capacidad de la batería (kWh):</label>
+        <input type="number" id="capacidad_bateria_kwh" name="capacidad_bateria_kwh" step="0.01" required>
+        <br>
+        <label for="potencia_cargador_kw">Potencia del cargador (kW):</label>
+        <input type="number" id="potencia_cargador_kw" name="potencia_cargador_kw" step="0.01" required>
+        <br>
+        <label for="distancia_recorrida_km">Distancia promedio diaria recorrida (km):</label>
+        <input type="number" id="distancia_recorrida_km" name="distancia_recorrida_km" step="0.01" required>
+        <br>
+        <button type="submit">Calcular</button>
+    </form>
+</body>
+</html>

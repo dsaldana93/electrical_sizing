@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Tarifas</title>
+</head>
+<body>
+    <h1>Editar Parámetros de Tarifas</h1>
+    <p>Modifica los valores de kWh y otros parámetros según sea necesario para cada tarifa.</p>
+    <form method="POST" action="/editar-tarifas">
+        {% for tarifa, valores in tarifas.items() %}
+            <h2>{{ tarifa }}</h2>
+            {% for key, value in valores.items() %}
+                <label for="{{ tarifa }}_{{ key }}">{{ key }}:</label>
+                <input type="text" id="{{ tarifa }}_{{ key }}" name="{{ tarifa }}_{{ key }}" value="{{ value }}">
+                <br>
+            {% endfor %}
+        {% endfor %}
+        <button type="submit">Guardar Cambios</button>
+        <button type="button" onclick="resetValues()">Restablecer Valores</button>
+    </form>
+
+    <script>
+        function resetValues() {
+            // Restablecer los valores predeterminados
+            document.querySelectorAll('input[type="text"]').forEach(input => {
+                input.value = input.defaultValue;
+            });
+        }
+    </script>
+</body>
+</html>
+
+@app.route('/editar-tarifas', methods=['GET', 'POST'])
+def editar_tarifas():
+    import json
+    tarifas_path = '/Users/dds/Documents/Dany25/Herramientas/electricity_bill/tarifas.json'
+    
+    if request.method == 'POST':
+        nuevas_tarifas = request.form.to_dict()
+        with open(tarifas_path, 'r') as file:
+            tarifas = json.load(file)
+        
+        for tarifa, valores in tarifas.items():
+            for key in valores.keys():
+                tarifas[tarifa][key] = float(nuevas_tarifas.get(f"{tarifa}_{key}", tarifas[tarifa][key]))
+        
+        with open(tarifas_path, 'w') as file:
+            json.dump(tarifas, file, indent=4)
+        
+        return jsonify({"message": "Tarifas actualizadas correctamente"}), 200
+    
+    with open(tarifas_path, 'r') as file:
+        tarifas = json.load(file)
+    
+    return render_template('editar_tarifas.html', tarifas=tarifas)

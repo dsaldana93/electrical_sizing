@@ -1,0 +1,53 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<h1>Resultados del Cálculo Solar</h1>
+
+<div class="results">
+    <h3>Requerimientos del Sistema:</h3>
+    <p>Número de paneles necesarios: {{ paneles }}</p>
+    <p>Calibre de cable recomendado: {{ calibre }}</p>
+    <p>Interruptor termomagnético: {{ interruptor }}</p>
+    <p>Costo estimado de instalación: ${{ costo_instalacion }} MXN</p>
+    <p>Retorno de inversión estimado: {{ meses_roi }} meses</p>
+</div>
+
+<div class="chart-container">
+    <canvas id="roiChart"></canvas>
+</div>
+
+<div class="chart-container">
+    <canvas id="costChart"></canvas>
+</div>
+
+<script>
+    // ROI Chart
+    new Chart(document.getElementById('roiChart'), {
+        type: 'line',
+        data: {
+            labels: ['Mes 1', 'Mes 2', 'Mes 3', 'Mes 4', 'Mes 5', 'Mes 6'],
+            datasets: [{
+                label: 'Retorno de Inversión',
+                data: [0, {{ meses_roi * 0.2 }}, {{ meses_roi * 0.4 }}, {{ meses_roi * 0.6 }}, {{ meses_roi * 0.8 }}, {{ meses_roi }}],
+                borderColor: 'rgb(75, 192, 192)'
+            }]
+        }
+    });
+
+    // Costo Diario Chart
+    const dates = [{% for fecha in fechas %}'{{ fecha.strftime("%d/%m") }}',{% endfor %}];
+    new Chart(document.getElementById('costChart'), {
+        type: 'bar',
+        data: {
+            labels: dates,
+            datasets: [{
+                label: 'Costo Diario (MXN)',
+                data: [{% for costo in costos %}{{ costo }},{% endfor %}],
+                backgroundColor: 'rgba(255, 99, 132, 0.2)'
+            }]
+        }
+    });
+</script>
+
+<a href="/solar" class="btn">Nuevo Cálculo</a>
+{% endblock %}

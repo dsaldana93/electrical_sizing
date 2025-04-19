@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resultado de Cálculo de Carga</title>
+</head>
+<body>
+    <h1>Resultado del Cálculo de Carga</h1>
+    <p>Energía necesaria para recargar: {{ energia_necesaria_kwh }} kWh</p>
+    <p>Tiempo de carga estimado: {{ tiempo_carga_horas }} horas ({{ tiempo_carga_minutos }} minutos)</p>
+    <p>Minutos por kilómetro: {{ minutos_por_km }} min/km</p>
+    <p>Kilómetros por minuto: {{ kilometros_por_minuto }} km/min</p>
+    <p>Tiempo de carga con factor conservador: {{ tiempo_conservador_minutos }} minutos</p>
+    <h2>Energía Diaria de Transporte</h2>
+    <p>Fórmula utilizada: {{ formula_energia_diaria }}</p>
+    <p>Resultado: {{ energia_diaria_transporte }} kWh/día</p>
+    <button onclick="location.href='/calcular-carga'">Realizar otro cálculo</button>
+</body>
+</html>

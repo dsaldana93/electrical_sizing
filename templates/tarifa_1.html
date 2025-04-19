@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block title %}Tarifa 1 - CFE{% endblock %}
+
+{% block content %}
+    <h1>Tarifa 1 - Uso General</h1>
+    <p>Para servicio general en baja tensión (menos de 1 kV)</p>
+    
+    <div style="margin-top: 20px; background: #f8f9fa; padding: 20px; border-radius: 5px;">
+        <h3>Características principales:</h3>
+        <ul>
+            <li>Aplicable para negocios pequeños y comercios</li>
+            <li>Voltaje de suministro: Menos de 1 kV</li>
+            <li>Cargo por kWh: \$1.102 MXN</li>
+            <li>Cargo fijo mensual: \$50.00 MXN</li>
+        </ul>
+        
+        <form method="POST" action="/tarifa-1" style="margin-top: 20px;">
+            <div style="margin-bottom: 15px;">
+                <label for="kwh">Consumo en kWh:
+                    <input type="number" id="kwh" name="kwh" step="0.01" required 
+                           style="padding: 8px; margin-left: 10px;">
+                </label>
+            </div>
+            <button type="submit" style="padding: 10px 20px; background: #3498db; color: white; border: none; border-radius: 5px;">
+                Calcular Costo
+            </button>
+        </form>
+
+        <!-- Botón para redirigir a la página de edición de tarifas -->
+        <button onclick="location.href='/editar-tarifas'" style="margin-top: 20px; padding: 10px 20px; background: #2ecc71; color: white; border: none; border-radius: 5px;">
+            Modificar Parámetros de Tarifas
+        </button>
+
+        {% if costo %}
+        <div style="margin-top: 30px; padding: 20px; background: white; border-radius: 5px;">
+            <h4>Desglose del cálculo:</h4>
+            <p>Cargo por energía: {{ "%.2f"|format(kwh * 1.102) }} MXN</p>
+            <p>Cargo fijo: 50.00 MXN</p>
+            <p style="font-weight: bold; margin-top: 10px;">
+                Total a pagar: {{ costo }} MXN
+            </p>
+        </div>
+        {% endif %}
+    </div>
+{% endblock %}

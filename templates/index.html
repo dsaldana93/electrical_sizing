@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Calculadora de Consumo Eléctrico CFE</h1>
+    <p>Seleccione una tarifa del menú lateral para realizar cálculos específicos</p>
+    
+    <div style="margin: 30px 0; padding: 20px; background: #f8f9fa; border-radius: 5px;">
+        <h2>¡Nueva función disponible!</h2>
+        <p>Ahora puede calcular diferentes tarifas eléctricas usando el menú lateral.</p>
+        <p>Pruebe la nueva calculadora solar para estimar paneles necesarios y periodo de retorno de inversión.</p>
+        <button onclick="location.href='/calcular-carga'">Calcular Tiempo de Carga</button>
+    </div>
+    
+    <div style="margin-top: 30px; padding: 20px; background: #f8f9fa; border-radius: 5px;">
+        <h2>Acerca de las tarifas CFE</h2>
+        <ul>
+            <li><strong>DAC:</strong> Doméstica de Alto Consumo (Para uso residencial con consumo mayor a 250 kWh bimestrales)</li>
+            <li><strong>1:</strong> Uso General (Servicio general en baja tensión)</li>
+            <li><strong>1F:</strong> Agrícola (Bombeo agrícola y acuacultura)</li>
+            <li><strong>OM:</strong> Industrial (Media y alta tensión para uso industrial)</li>
+        </ul>
+    </div>
+{% endblock %}

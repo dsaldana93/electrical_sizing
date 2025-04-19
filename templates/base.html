@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Calculadora CFE{% endblock %}</title>
+    <style>
+        .sidebar {
+            width: 200px;
+            position: fixed;
+            height: 100%;
+            background: #2c3e50;
+            padding: 20px;
+            color: white;
+        }
+        .main-content {
+            margin-left: 220px;
+            padding: 20px;
+        }
+        .tarifa-btn {
+            display: block;
+            color: white;
+            padding: 10px;
+            margin: 10px 0;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+        .tarifa-btn:hover {
+            background: #34495e;
+        }
+        .active {
+            background: #3498db;
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <h2>Tarifas CFE</h2>
+        <a href="/" class="tarifa-btn {% if request.path == '/' %}active{% endif %}">Inicio</a>
+        <a href="/tarifa-dac" class="tarifa-btn {% if request.path == '/tarifa-dac' %}active{% endif %}">
+            DAC - Doméstica de Alto Consumo
+        </a>
+        <a href="/tarifa-1" class="tarifa-btn {% if request.path == '/tarifa-1' %}active{% endif %}">
+            1 - Uso General
+        </a>
+        <a href="/tarifa-1f" class="tarifa-btn {% if request.path == '/tarifa-1f' %}active{% endif %}">
+            1F - Agricultura
+        </a>
+        <a href="/tarifa-om" class="tarifa-btn {% if request.path == '/tarifa-om' %}active{% endif %}">
+            OM - Uso Industrial
+        </a>
+        <a href="/solar" class="tarifa-btn {% if request.path == '/solar' %}active{% endif %}">
+            Calculadora Solar
+        </a>
+    </div>
+    
+    <div class="main-content">
+        {% block content %}{% endblock %}
+    </div>
+</body>
+</html>

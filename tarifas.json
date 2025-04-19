@@ -1,0 +1,11 @@
+{
+    "DAC": {
+        "basico": 0.793,
+        "intermedio": 0.956,
+        "alto": 2.802
+    },
+    "tarifa_1": {
+        "cargo_kwh": 1.102,
+        "cargo_fijo": 50.0
+    }
+}
