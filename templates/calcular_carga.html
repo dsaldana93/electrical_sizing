@@ -4,23 +4,63 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calcular Tiempo de Carga</title>
+    <script>
+        async function calcularCarga() {
+            const formData = new FormData(document.getElementById('calcularCargaForm'));
+            const response = await fetch('/calcular-carga', {
+                method: 'POST',
+                body: formData
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+
+                // Mostrar los resultados en la página
+                document.getElementById('resultado').innerHTML = `
+                    <p><strong>Fórmula del Consumo del Vehículo:</strong></p>
+                    <p>${data.formula_consumo_vehiculo}</p>
+                    <p><strong>Consumo del Vehículo:</strong> ${data.consumo_vehiculo} cada ${data.frecuencia_carga}</p>
+                    <p><strong>Rendimiento del Vehículo:</strong> ${data.rendimiento_vehiculo}</p>
+                    <p><strong>Energía Diaria de Transporte:</strong> ${data.energia_diaria_transporte}</p>
+                    <p><strong>Energía Necesaria:</strong> ${data.energia_necesaria_kwh}</p>
+                    <p><strong>Tiempo de Carga:</strong> ${data.tiempo_carga_horas}(${data.tiempo_carga_minutos})</p>
+                    <p><strong>Minutos por Kilómetro:</strong> ${data.minutos_por_km}</p>
+                    <p><strong>Kilómetros por Minuto:</strong> ${data.kilometros_por_minuto}</p>
+                    <p><strong>Tiempo Conservador:</strong> ${data.tiempo_conservador_minutos} minutos</p>
+                `;
+            } else {
+                document.getElementById('resultado').innerHTML = `<p>Error al calcular los resultados.</p>`;
+            }
+        }
+
+        // Agregar eventos de cambio a los campos del formulario
+        document.addEventListener('DOMContentLoaded', () => {
+            const form = document.getElementById('calcularCargaForm');
+            form.addEventListener('input', calcularCarga); // Llamar a calcularCarga en cada cambio
+        });
+    </script>
 </head>
 <body>
     <h1>Calcular Tiempo de Carga</h1>
-    <form method="POST" action="/calcular-carga">
-        <label for="autonomia_km">Autonomía del vehículo (km):</label>
-        <input type="number" id="autonomia_km" name="autonomia_km" step="0.01" required>
-        <br>
-        <label for="capacidad_bateria_kwh">Capacidad de la batería (kWh):</label>
-        <input type="number" id="capacidad_bateria_kwh" name="capacidad_bateria_kwh" step="0.01" required>
-        <br>
-        <label for="potencia_cargador_kw">Potencia del cargador (kW):</label>
-        <input type="number" id="potencia_cargador_kw" name="potencia_cargador_kw" step="0.01" required>
-        <br>
-        <label for="distancia_recorrida_km">Distancia promedio diaria recorrida (km):</label>
-        <input type="number" id="distancia_recorrida_km" name="distancia_recorrida_km" step="0.01" required>
-        <br>
-        <button type="submit">Calcular</button>
+    <form id="calcularCargaForm">
+        <label for="autonomia_km">Autonomía (km):</label>
+        <input type="number" id="autonomia_km" name="autonomia_km" step="0.01" required><br>
+
+        <label for="capacidad_bateria_kwh">Capacidad de la Batería (kWh):</label>
+        <input type="number" id="capacidad_bateria_kwh" name="capacidad_bateria_kwh" step="0.01" required><br>
+
+        <label for="potencia_cargador_kw">Potencia del Cargador (kW):</label>
+        <input type="number" id="potencia_cargador_kw" name="potencia_cargador_kw" step="0.01" required><br>
+
+        <label for="distancia_recorrida_km">Distancia promedio por dia (km):</label>
+        <input type="number" id="distancia_recorrida_km" name="distancia_recorrida_km" step="0.01" required><br>
+
+        <label for="frecuencia_carga">Frecuencia de Carga (días):</label>
+        <input type="number" id="frecuencia_carga" name="frecuencia_carga" step="0.01" required><br>
     </form>
+
+    <div id="resultado">
+        <!-- Aquí se mostrarán los resultados -->
+    </div>
 </body>
 </html>
